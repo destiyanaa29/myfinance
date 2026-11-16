@@ -1,18 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
 
 :root {
-    --bg: #101714;
-    --side: #141d19;
-    --panel: #18221d;
-    --panel2: #1c2922;
-    --line: #29372f;
-    --ink: #edf4ef;
-    --muted: #84958b;
-    --green: #75c99a;
-    --green2: #2d8057;
-    --coral: #e8877e;
+    --bg: #17121a;
+    --side: #1d1721;
+    --panel: #241c29;
+    --panel2: #2d2232;
+    --line: #443449;
+    --ink: #f8f0f8;
+    --muted: #b09caf;
+    --green: #ed8fc7;
+    --green2: #a94382;
+    --coral: #e887b5;
     --gold: #d8b879;
-    --radius: 14px
+    --radius: 14px;
+    --accent: #ed8fc7
 }
 
 * {
@@ -70,15 +71,15 @@ button {
     width: 38px;
     height: 38px;
     border-radius: 12px;
-    background: #244c38;
-    color: #a9e2bd;
+    background: #633653;
+    color: #ffd5ed;
     display: grid;
     place-items: center
 }
 
 .brand small {
     display: block;
-    color: #708278;
+    color: #b79bb0;
     font: 700 8px 'DM Sans';
     letter-spacing: 1.2px;
     margin-top: 3px
@@ -87,7 +88,7 @@ button {
 .side-caption {
     font-size: 9px;
     letter-spacing: 1.4px;
-    color: #607168;
+    color: #987e93;
     font-weight: 700;
     margin: 43px 12px 12px
 }
@@ -100,7 +101,7 @@ button {
 .nav-item {
     background: transparent;
     border: 0;
-    color: #94a49a;
+    color: #c0aec0;
     text-align: left;
     padding: 12px 13px;
     border-radius: 9px;
@@ -119,8 +120,8 @@ button {
 
 .nav-item:hover,
 .nav-item.active {
-    background: #21362a;
-    color: #a9e2bd
+    background: #493047;
+    color: #ffd5ed
 }
 
 .sidebar-bottom {
@@ -156,8 +157,8 @@ button {
     width: 31px;
     height: 31px;
     border-radius: 50%;
-    background: #2b4b39;
-    color: #b4e2c2;
+    background: #633653;
+    color: #ffd5ed;
     display: grid;
     place-items: center;
     font-weight: 700
@@ -237,16 +238,16 @@ button {
 }
 
 .btn.primary {
-    background: #2c8056;
+    background: #b84d91;
     color: #f4fff7
 }
 
 .btn.primary:hover {
-    background: #369768
+    background: #d365a9
 }
 
 .btn.ghost {
-    background: #1a251f;
+    background: #2c2231;
     border-color: var(--line);
     color: #c3d0c7
 }
@@ -260,7 +261,7 @@ button {
 .icon-btn {
     width: 35px;
     height: 35px;
-    background: #1a251f;
+    background: #2c2231;
     border: 1px solid var(--line);
     border-radius: 9px;
     color: #b4c4b9;
@@ -300,7 +301,7 @@ button {
 }
 
 .month-control button {
-    background: #1a251f;
+    background: #2c2231;
     border: 1px solid var(--line);
     border-radius: 7px;
     color: #aab8ae;
@@ -310,7 +311,7 @@ button {
 }
 
 .hero-balance {
-    background: linear-gradient(115deg, #1d3829, #1b2b23 65%, #22392b);
+    background: linear-gradient(115deg, #59334f, #38283d 65%, #4b3049);
     border: 1px solid #31513d;
     border-radius: var(--radius);
     padding: 25px 28px;
@@ -336,7 +337,7 @@ button {
 .light-label {
     font-size: 9px;
     letter-spacing: 1.4px;
-    color: #a4c0ad;
+    color: #e9b6d7;
     font-weight: 700
 }
 
@@ -348,7 +349,7 @@ button {
 
 .hero-balance p {
     font-size: 10px;
-    color: #91ad9b;
+    color: #d2a9c7;
     margin: 5px 0 0
 }
 
@@ -360,7 +361,7 @@ button {
     display: grid;
     place-items: center;
     font-size: 23px;
-    color: #b7d9c1;
+    color: #ffd4ec;
     z-index: 1
 }
 
@@ -401,18 +402,18 @@ button {
 }
 
 .stat-icon.up {
-    background: #1e3b2a;
-    color: #81d4a1
+    background: #51334b;
+    color: #f5a9d5
 }
 
 .stat-icon.down {
-    background: #402a29;
-    color: #ed958c
+    background: #4b2d43;
+    color: #f0a0cb
 }
 
 .stat-icon.neutral {
-    background: #2a3040;
-    color: #b2bdd8
+    background: #3b3044;
+    color: #e0b9d8
 }
 
 .stat-card strong {
@@ -468,11 +469,11 @@ button {
     padding: 5px;
     border: 1px solid #34463b;
     border-radius: 9px;
-    background: #111a15
+    background: #1b1520
 }
 
 .quick-box:focus-within {
-    border-color: #559a70
+    border-color: #d66bab
 }
 
 .quick-box input {
@@ -494,7 +495,7 @@ button {
     width: 36px;
     border: 0;
     border-radius: 7px;
-    background: #2c8056;
+    background: #b84d91;
     color: white;
     font-size: 19px
 }
@@ -508,8 +509,8 @@ button {
 
 .chips button {
     border: 1px solid var(--line);
-    background: #1b2821;
-    color: #9cac9f;
+    background: #332638;
+    color: #d2b6cf;
     border-radius: 20px;
     padding: 6px 9px;
     font-size: 9px
@@ -526,7 +527,7 @@ button {
 .text-action {
     border: 0;
     background: none;
-    color: #7bc99a;
+    color: #f19bcf;
     font-size: 10px;
     font-weight: 700;
     padding: 0
@@ -569,7 +570,7 @@ button {
 .section-toolbar select {
     width: 100%;
     padding: 10px;
-    background: #111a15;
+    background: #1b1520;
     border: 1px solid var(--line);
     border-radius: 8px;
     color: var(--ink);
@@ -614,7 +615,7 @@ button {
     height: 100%;
     display: block;
     border-radius: 20px;
-    background: #64bd87
+    background: #e58bc0
 }
 
 .progress i.over {
@@ -645,8 +646,8 @@ button {
     width: 30px;
     height: 30px;
     border-radius: 9px;
-    background: #28382d;
-    color: #8fd0a5;
+    background: #493047;
+    color: #f0b0d8;
     display: grid;
     place-items: center
 }
@@ -674,7 +675,7 @@ button {
 }
 
 .positive {
-    color: #7bd19b
+    color: #f0a0ce
 }
 
 .negative {
@@ -747,13 +748,13 @@ td:first-child {
     font-size: 9px;
     padding: 5px 8px;
     border-radius: 20px;
-    background: #24372b;
-    color: #85d1a0
+    background: #493047;
+    color: #f4b0d9
 }
 
 .pill.expense {
-    background: #3b2928;
-    color: #e9958c
+    background: #512b45;
+    color: #f0a0cb
 }
 
 .delete {
@@ -805,7 +806,7 @@ td:first-child {
 .card-actions button {
     border: 0;
     background: none;
-    color: #7bc99a;
+    color: #f19bcf;
     font-size: 10px;
     padding: 0
 }
@@ -882,11 +883,11 @@ td:first-child {
 }
 
 .bar.income {
-    background: #65b986
+    background: #e58bc0
 }
 
 .bar.expense {
-    background: #d77e76
+    background: #b84d91
 }
 
 .month-bars small {
@@ -956,8 +957,8 @@ td:first-child {
     left: 50%;
     transform: translate(-50%, 15px);
     opacity: 0;
-    background: #d9f2e1;
-    color: #163a26;
+    background: #f8dced;
+    color: #552747;
     padding: 11px 17px;
     border-radius: 8px;
     font-size: 11px;
@@ -1027,12 +1028,12 @@ td:first-child {
 .auth-switch button {
     border: 0;
     background: none;
-    color: #80d19d;
+    color: #f19bcf;
     font-weight: 700
 }
 
 .auth-message {
-    color: #e99a8d;
+    color: #f0a0cb;
     font-size: 10px;
     line-height: 1.5;
     min-height: 14px
