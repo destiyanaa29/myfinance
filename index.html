@@ -19,14 +19,10 @@
       <p class="muted" id="authSubtitle">Masuk untuk melihat dan mengelola keuanganmu.</p>
       <form id="authForm" class="auth-form">
         <label>PIN pribadi</label><input id="authPassword" type="password" inputmode="numeric" pattern="[0-9]{6,12}"
-          minlength="6" maxlength="12" autocomplete="current-password" placeholder="Masukkan PIN 6–12 digit" required>
-        <div id="pinConfirmWrap" class="hidden"><label>Ulangi PIN</label><input id="authPinConfirm" type="password"
-            inputmode="numeric" pattern="[0-9]{6,12}" minlength="6" maxlength="12" autocomplete="new-password"
-            placeholder="Ulangi PIN kamu"></div>
+          minlength="6" maxlength="12" autocomplete="current-password" placeholder="Masukkan PIN" required>
         <button class="btn primary full" id="authSubmit">Masuk</button>
       </form>
-      <p class="auth-switch" id="authSwitchText">Belum punya akun? <button id="toggleAuth" type="button">Daftar
-          sekarang</button></p>
+      <p class="auth-switch hidden" id="authSwitchText"></p>
       <p class="auth-message" id="authMessage"></p>
       <p class="auth-foot">Akun pribadi · Data tersimpan online secara aman</p>
     </div>
