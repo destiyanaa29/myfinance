@@ -8,10 +8,41 @@ const titles = { dashboard: ["PERSONAL FINANCE", "Ringkasan keuangan", "Semua ko
 function toast(s) { let t = $("toast"); t.textContent = s; t.classList.add("show"); setTimeout(() => t.classList.remove("show"), 2500) }
 function esc(s) { return String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])) }
 function authMessage(s) { $("authMessage").textContent = s }
-function setAuthMode(m) { authMode = m; $("authTitle").textContent = m === "login" ? "Selamat datang kembali." : "Buat akun MyFinance."; $("authSubtitle").textContent = m === "login" ? "Masuk untuk melihat dan mengelola keuanganmu." : "Daftar menggunakan email dan password."; $("authSubmit").textContent = m === "login" ? "Masuk" : "Buat akun"; $("authSwitchText").innerHTML = m === "login" ? 'Belum punya akun? <button id="toggleAuth" type="button">Daftar sekarang</button>' : 'Sudah punya akun? <button id="toggleAuth" type="button">Masuk</button>'; $("toggleAuth").onclick = () => setAuthMode(authMode === "login" ? "signup" : "login"); authMessage("") }
-async function authSubmit(e) { e.preventDefault(); if (!sb) { authMessage("Konfigurasi Supabase belum diisi. Isi config.js terlebih dahulu."); return } const email = $("authEmail").value.trim(), password = $("authPassword").value; $("authSubmit").disabled = true; try { let r = authMode === "login" ? await sb.auth.signInWithPassword({ email, password }) : await sb.auth.signUp({ email, password, options: { emailRedirectTo: location.origin + location.pathname } }); if (r.error) throw r.error; if (authMode === "signup" && !r.data.session) { authMessage("Pendaftaran berhasil. Cek email untuk verifikasi, lalu masuk."); return } if (r.data.user) { user = r.data.user; await startApp() } } catch (e) { authMessage(e.message || "Tidak dapat memproses akun.") } finally { $("authSubmit").disabled = false } }
-$("authForm").addEventListener("submit", authSubmit); $("toggleAuth").onclick = () => setAuthMode("signup");
-async function startApp() { $("authScreen").classList.add("hidden"); $("app").classList.remove("hidden"); $("userEmail").textContent = user.email || "Pengguna"; $("userAvatar").textContent = (user.email || "U").slice(0, 1).toUpperCase(); await loadAll(); renderAll(); checkReminders() }
+const INTERNAL_AUTH_EMAIL = "owner@myfinance.app"; // Identitas internal; pengguna tidak perlu memasukkan email.
+function setAuthMode(m) {
+    authMode = m;
+    $("authTitle").textContent = m === "login" ? "Selamat datang kembali." : "Buat PIN MyFinance.";
+    $("authSubtitle").textContent = m === "login" ? "Masukkan PIN pribadi untuk membuka keuanganmu." : "Buat PIN 6–12 digit. Simpan baik-baik dan jangan bagikan kepada siapa pun.";
+    $("authSubmit").textContent = m === "login" ? "Masuk" : "Buat PIN";
+    $("pinConfirmWrap").classList.toggle("hidden", m === "login");
+    $("authPassword").value = "";
+    if ($("authPinConfirm")) $("authPinConfirm").value = "";
+    $("authSwitchText").innerHTML = m === "login" ? 'Belum punya PIN? <button id="toggleAuth" type="button">Buat PIN</button>' : 'Sudah punya PIN? <button id="toggleAuth" type="button">Masuk</button>';
+    $("toggleAuth").onclick = () => setAuthMode(authMode === "login" ? "signup" : "login");
+    authMessage("");
+}
+async function authSubmit(e) {
+    e.preventDefault();
+    if (!sb) { authMessage("Konfigurasi Supabase belum diisi. Isi config.js terlebih dahulu."); return }
+    const pin = $("authPassword").value;
+    if (!/^\d{6,12}$/.test(pin)) { authMessage("PIN harus terdiri dari 6–12 angka."); return }
+    if (authMode === "signup" && pin !== $("authPinConfirm").value) { authMessage("Konfirmasi PIN tidak sama."); return }
+    $("authSubmit").disabled = true;
+    try {
+        const r = authMode === "login"
+            ? await sb.auth.signInWithPassword({ email: INTERNAL_AUTH_EMAIL, password: pin })
+            : await sb.auth.signUp({ email: INTERNAL_AUTH_EMAIL, password: pin });
+        if (r.error) throw r.error;
+        if (authMode === "signup" && !r.data.session) { authMessage("Akun dibuat, tetapi konfirmasi email masih aktif. Buka Supabase → Authentication → Providers → Email, lalu nonaktifkan Confirm email."); return }
+        if (r.data.user) { user = r.data.user; await startApp() }
+    } catch (e) {
+        const msg = e.message || "Tidak dapat memproses PIN.";
+        authMessage(msg.toLowerCase().includes("already registered") ? "PIN MyFinance sudah pernah dibuat. Silakan pilih Masuk." : msg);
+    } finally { $("authSubmit").disabled = false }
+}
+$("authForm").addEventListener("submit", authSubmit);
+$("toggleAuth").onclick = () => setAuthMode("signup");
+async function startApp() { $("authScreen").classList.add("hidden"); $("app").classList.remove("hidden"); $("userEmail").textContent = "Akun pribadi"; $("userAvatar").textContent = "M"; await loadAll(); renderAll(); checkReminders() }
 async function loadAll() { const tables = ["transactions", "categories", "budgets", "savings_goals", "debts", "bills"]; const results = await Promise.all(tables.map(t => sb.from(t).select("*").order(t === "transactions" ? "transaction_date" : "created_at", { ascending: false }))); for (let i = 0; i < tables.length; i++) { if (results[i].error) throw results[i].error; data[({ transactions: "transactions", categories: "categories", budgets: "budgets", savings_goals: "goals", debts: "debts", bills: "bills" })[tables[i]]] = results[i].data || [] } if (!data.categories.length) { for (const [name, type] of defaults) { const { error } = await sb.from("categories").insert({ user_id: user.id, name, type }); if (error && error.code !== "23505") console.warn(error) } const r = await sb.from("categories").select("*"); if (!r.error) data.categories = r.data } }
 async function refresh() { await loadAll(); renderAll() }
 function monthTx(date = selected) { let k = monthStart(date).slice(0, 7); return data.transactions.filter(t => t.transaction_date.slice(0, 7) === k) }

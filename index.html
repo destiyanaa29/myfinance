@@ -1,82 +1,315 @@
 <!doctype html>
 <html lang="id">
+
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101714">
-<title>MyFinance — Personal Finance</title><link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101714">
+  <title>MyFinance — Personal Finance</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-<div id="authScreen" class="auth-screen">
-  <div class="auth-card">
-    <div class="brand"><span class="brand-mark">M</span><span>myfinance<small>PERSONAL MONEY SPACE</small></span></div>
-    <p class="eyebrow">YOUR MONEY, YOUR CONTROL</p><h1 id="authTitle">Selamat datang kembali.</h1><p class="muted" id="authSubtitle">Masuk untuk melihat dan mengelola keuanganmu.</p>
-    <form id="authForm" class="auth-form">
-      <label>Email</label><input id="authEmail" type="email" autocomplete="email" placeholder="nama@email.com" required>
-      <label>Password</label><input id="authPassword" type="password" minlength="6" autocomplete="current-password" placeholder="Minimal 6 karakter" required>
-      <button class="btn primary full" id="authSubmit">Masuk</button>
-    </form>
-    <p class="auth-switch" id="authSwitchText">Belum punya akun? <button id="toggleAuth" type="button">Daftar sekarang</button></p>
-    <p class="auth-message" id="authMessage"></p>
-    <p class="auth-foot">Akun pribadi · Data tersimpan online secara aman</p>
+  <div id="authScreen" class="auth-screen">
+    <div class="auth-card">
+      <div class="brand"><span class="brand-mark">M</span><span>myfinance<small>PERSONAL MONEY SPACE</small></span>
+      </div>
+      <p class="eyebrow">YOUR MONEY, YOUR CONTROL</p>
+      <h1 id="authTitle">Selamat datang kembali.</h1>
+      <p class="muted" id="authSubtitle">Masuk untuk melihat dan mengelola keuanganmu.</p>
+      <form id="authForm" class="auth-form">
+        <label>PIN pribadi</label><input id="authPassword" type="password" inputmode="numeric" pattern="[0-9]{6,12}"
+          minlength="6" maxlength="12" autocomplete="current-password" placeholder="Masukkan PIN 6–12 digit" required>
+        <div id="pinConfirmWrap" class="hidden"><label>Ulangi PIN</label><input id="authPinConfirm" type="password"
+            inputmode="numeric" pattern="[0-9]{6,12}" minlength="6" maxlength="12" autocomplete="new-password"
+            placeholder="Ulangi PIN kamu"></div>
+        <button class="btn primary full" id="authSubmit">Masuk</button>
+      </form>
+      <p class="auth-switch" id="authSwitchText">Belum punya akun? <button id="toggleAuth" type="button">Daftar
+          sekarang</button></p>
+      <p class="auth-message" id="authMessage"></p>
+      <p class="auth-foot">Akun pribadi · Data tersimpan online secara aman</p>
+    </div>
   </div>
-</div>
 
-<div id="app" class="app hidden">
-  <aside class="sidebar">
-    <a class="brand" href="#"><span class="brand-mark">M</span><span>myfinance<small>PERSONAL MONEY SPACE</small></span></a>
-    <div class="side-caption">WORKSPACE</div>
-    <nav id="navigation">
-      <button class="nav-item active" data-page="dashboard"><span>▦</span> Ringkasan</button>
-      <button class="nav-item" data-page="transactions"><span>↕</span> Transaksi</button>
-      <button class="nav-item" data-page="budgets"><span>◷</span> Anggaran</button>
-      <button class="nav-item" data-page="goals"><span>◎</span> Target tabungan</button>
-      <button class="nav-item" data-page="debts"><span>⇄</span> Utang & piutang</button>
-      <button class="nav-item" data-page="bills"><span>▤</span> Pengingat tagihan</button>
-      <button class="nav-item" data-page="reports"><span>▥</span> Laporan tahunan</button>
-    </nav>
-    <div class="sidebar-bottom"><div class="online-status"><i></i> Database online</div><div class="user-mini"><div class="avatar" id="userAvatar">U</div><div class="user-meta"><b id="userEmail">Pengguna</b><small>Personal account</small></div><button id="signOut" title="Keluar">↗</button></div></div>
-  </aside>
-
-  <main class="main">
-    <header class="topbar"><div><p class="eyebrow" id="pageEyebrow">PERSONAL FINANCE</p><h1 id="pageTitle">Ringkasan keuangan</h1><p class="muted" id="pageDesc">Semua kondisi keuanganmu, dalam satu tempat.</p></div><div class="top-actions"><button class="icon-btn" id="notificationBtn" title="Aktifkan notifikasi pengingat">♧</button><button class="btn ghost" id="exportBtn">Ekspor CSV ↓</button></div></header>
-
-    <section class="page active" id="page-dashboard">
-      <div class="period-row"><div><span class="eyebrow">PERIODE AKTIF</span><div class="month-control"><button id="prevMonth">‹</button><b id="monthLabel"></b><button id="nextMonth">›</button></div></div><button class="btn outline" id="thisMonth">Bulan ini</button></div>
-      <div class="hero-balance"><div><span class="light-label">TOTAL SALDO BERJALAN</span><div class="hero-number" id="totalBalance">Rp0</div><p>Saldo awal + seluruh pemasukan − seluruh pengeluaran</p></div><div class="hero-symbol">↗</div></div>
-      <div class="stat-grid">
-        <article class="stat-card"><div class="stat-label"><i class="stat-icon up">↗</i> Pemasukan bulan ini</div><strong id="incomeTotal">Rp0</strong><small id="incomeCount">0 transaksi</small></article>
-        <article class="stat-card"><div class="stat-label"><i class="stat-icon down">↘</i> Pengeluaran bulan ini</div><strong id="expenseTotal">Rp0</strong><small id="expenseCount">0 transaksi</small></article>
-        <article class="stat-card"><div class="stat-label"><i class="stat-icon neutral">＝</i> Sisa bulan ini</div><strong id="netTotal">Rp0</strong><small>Selisih pemasukan dan pengeluaran</small></article>
+  <div id="app" class="app hidden">
+    <aside class="sidebar">
+      <a class="brand" href="#"><span class="brand-mark">M</span><span>myfinance<small>PERSONAL MONEY
+            SPACE</small></span></a>
+      <div class="side-caption">WORKSPACE</div>
+      <nav id="navigation">
+        <button class="nav-item active" data-page="dashboard"><span>▦</span> Ringkasan</button>
+        <button class="nav-item" data-page="transactions"><span>↕</span> Transaksi</button>
+        <button class="nav-item" data-page="budgets"><span>◷</span> Anggaran</button>
+        <button class="nav-item" data-page="goals"><span>◎</span> Target tabungan</button>
+        <button class="nav-item" data-page="debts"><span>⇄</span> Utang & piutang</button>
+        <button class="nav-item" data-page="bills"><span>▤</span> Pengingat tagihan</button>
+        <button class="nav-item" data-page="reports"><span>▥</span> Laporan tahunan</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="online-status"><i></i> Database online</div>
+        <div class="user-mini">
+          <div class="avatar" id="userAvatar">U</div>
+          <div class="user-meta"><b id="userEmail">Pengguna</b><small>Personal account</small></div><button id="signOut"
+            title="Keluar">↗</button>
+        </div>
       </div>
-      <div class="dashboard-grid">
-        <article class="panel quick-panel"><div class="panel-title"><div><h2>Catat transaksi cepat</h2><p>Ketik seperti sedang mengirim pesan.</p></div><span class="accent-star">✳</span></div>
-          <form id="quickForm"><div class="quick-box"><input id="quickInput" placeholder="Contoh: makan siang 25.000" autocomplete="off" required><button type="submit">↑</button></div><div class="chips"><button type="button" data-example="Makan siang 25.000">Makan siang 25.000</button><button type="button" data-example="+ Gaji 2.500.000">+ Gaji 2.500.000</button><button type="button" data-example="- Bensin 50.000">- Bensin 50.000</button></div><small class="tip">Gunakan tanda + untuk pemasukan dan - untuk pengeluaran. Periksa hasil kategorinya sebelum disimpan.</small></form>
-          <button class="text-action" id="manualToggle">＋ Isi detail transaksi</button>
-          <form id="manualForm" class="manual-form hidden">
-            <div class="form-grid"><div><label>Nama transaksi</label><input id="txDescription" required placeholder="Contoh: Belanja bulanan"></div><div><label>Jenis</label><select id="txType"><option value="expense">Pengeluaran</option><option value="income">Pemasukan</option></select></div><div><label>Nominal (Rp)</label><input id="txAmount" type="number" min="1" required></div><div><label>Kategori</label><select id="txCategory"></select></div><div><label>Tanggal</label><input id="txDate" type="date" required></div></div><button class="btn primary full">Simpan transaksi</button>
-          </form>
-        </article>
-        <article class="panel"><div class="panel-title"><div><h2>Anggaran bulan ini</h2><p>Ringkasan penggunaan anggaran.</p></div><button class="text-action" data-go="budgets">Lihat semua ↗</button></div><div id="budgetPreview" class="budget-preview"><div class="empty">Belum ada anggaran bulan ini.</div></div></article>
-        <article class="panel"><div class="panel-title"><div><h2>Pengingat terdekat</h2><p>Tagihan yang perlu diperhatikan.</p></div><button class="text-action" data-go="bills">Lihat semua ↗</button></div><div id="billPreview" class="bill-preview"><div class="empty">Belum ada tagihan.</div></div></article>
-        <article class="panel"><div class="panel-title"><div><h2>Transaksi terbaru</h2><p>Aktivitas keuangan terakhir.</p></div><button class="text-action" data-go="transactions">Semua transaksi ↗</button></div><div id="recentTransactions" class="recent-list"><div class="empty">Belum ada transaksi.</div></div></article>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow" id="pageEyebrow">PERSONAL FINANCE</p>
+          <h1 id="pageTitle">Ringkasan keuangan</h1>
+          <p class="muted" id="pageDesc">Semua kondisi keuanganmu, dalam satu tempat.</p>
+        </div>
+        <div class="top-actions"><button class="icon-btn" id="notificationBtn"
+            title="Aktifkan notifikasi pengingat">♧</button><button class="btn ghost" id="exportBtn">Ekspor CSV
+            ↓</button></div>
+      </header>
+
+      <section class="page active" id="page-dashboard">
+        <div class="period-row">
+          <div><span class="eyebrow">PERIODE AKTIF</span>
+            <div class="month-control"><button id="prevMonth">‹</button><b id="monthLabel"></b><button
+                id="nextMonth">›</button></div>
+          </div><button class="btn outline" id="thisMonth">Bulan ini</button>
+        </div>
+        <div class="hero-balance">
+          <div><span class="light-label">TOTAL SALDO BERJALAN</span>
+            <div class="hero-number" id="totalBalance">Rp0</div>
+            <p>Saldo awal + seluruh pemasukan − seluruh pengeluaran</p>
+          </div>
+          <div class="hero-symbol">↗</div>
+        </div>
+        <div class="stat-grid">
+          <article class="stat-card">
+            <div class="stat-label"><i class="stat-icon up">↗</i> Pemasukan bulan ini</div><strong
+              id="incomeTotal">Rp0</strong><small id="incomeCount">0 transaksi</small>
+          </article>
+          <article class="stat-card">
+            <div class="stat-label"><i class="stat-icon down">↘</i> Pengeluaran bulan ini</div><strong
+              id="expenseTotal">Rp0</strong><small id="expenseCount">0 transaksi</small>
+          </article>
+          <article class="stat-card">
+            <div class="stat-label"><i class="stat-icon neutral">＝</i> Sisa bulan ini</div><strong
+              id="netTotal">Rp0</strong><small>Selisih pemasukan dan pengeluaran</small>
+          </article>
+        </div>
+        <div class="dashboard-grid">
+          <article class="panel quick-panel">
+            <div class="panel-title">
+              <div>
+                <h2>Catat transaksi cepat</h2>
+                <p>Ketik seperti sedang mengirim pesan.</p>
+              </div><span class="accent-star">✳</span>
+            </div>
+            <form id="quickForm">
+              <div class="quick-box"><input id="quickInput" placeholder="Contoh: makan siang 25.000" autocomplete="off"
+                  required><button type="submit">↑</button></div>
+              <div class="chips"><button type="button" data-example="Makan siang 25.000">Makan siang
+                  25.000</button><button type="button" data-example="+ Gaji 2.500.000">+ Gaji 2.500.000</button><button
+                  type="button" data-example="- Bensin 50.000">- Bensin 50.000</button></div><small class="tip">Gunakan
+                tanda + untuk pemasukan dan - untuk pengeluaran. Periksa hasil kategorinya sebelum disimpan.</small>
+            </form>
+            <button class="text-action" id="manualToggle">＋ Isi detail transaksi</button>
+            <form id="manualForm" class="manual-form hidden">
+              <div class="form-grid">
+                <div><label>Nama transaksi</label><input id="txDescription" required
+                    placeholder="Contoh: Belanja bulanan"></div>
+                <div><label>Jenis</label><select id="txType">
+                    <option value="expense">Pengeluaran</option>
+                    <option value="income">Pemasukan</option>
+                  </select></div>
+                <div><label>Nominal (Rp)</label><input id="txAmount" type="number" min="1" required></div>
+                <div><label>Kategori</label><select id="txCategory"></select></div>
+                <div><label>Tanggal</label><input id="txDate" type="date" required></div>
+              </div><button class="btn primary full">Simpan transaksi</button>
+            </form>
+          </article>
+          <article class="panel">
+            <div class="panel-title">
+              <div>
+                <h2>Anggaran bulan ini</h2>
+                <p>Ringkasan penggunaan anggaran.</p>
+              </div><button class="text-action" data-go="budgets">Lihat semua ↗</button>
+            </div>
+            <div id="budgetPreview" class="budget-preview">
+              <div class="empty">Belum ada anggaran bulan ini.</div>
+            </div>
+          </article>
+          <article class="panel">
+            <div class="panel-title">
+              <div>
+                <h2>Pengingat terdekat</h2>
+                <p>Tagihan yang perlu diperhatikan.</p>
+              </div><button class="text-action" data-go="bills">Lihat semua ↗</button>
+            </div>
+            <div id="billPreview" class="bill-preview">
+              <div class="empty">Belum ada tagihan.</div>
+            </div>
+          </article>
+          <article class="panel">
+            <div class="panel-title">
+              <div>
+                <h2>Transaksi terbaru</h2>
+                <p>Aktivitas keuangan terakhir.</p>
+              </div><button class="text-action" data-go="transactions">Semua transaksi ↗</button>
+            </div>
+            <div id="recentTransactions" class="recent-list">
+              <div class="empty">Belum ada transaksi.</div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="page" id="page-transactions">
+        <div class="panel">
+          <div class="section-toolbar">
+            <div>
+              <h2>Semua transaksi</h2>
+              <p>Kelola pemasukan dan pengeluaranmu.</p>
+            </div>
+            <div class="toolbar-controls"><input id="txSearch" placeholder="Cari transaksi..."><select id="txFilter">
+                <option value="all">Semua jenis</option>
+                <option value="income">Pemasukan</option>
+                <option value="expense">Pengeluaran</option>
+              </select></div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>TRANSAKSI</th>
+                  <th>KATEGORI</th>
+                  <th>TANGGAL</th>
+                  <th>JENIS</th>
+                  <th class="right">NOMINAL</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="allTxRows"></tbody>
+            </table>
+            <div class="empty hidden" id="txEmpty">Tidak ada transaksi yang cocok.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="page-budgets">
+        <div class="section-toolbar">
+          <div>
+            <h2>Anggaran bulanan</h2>
+            <p>Tetapkan batas pengeluaran per kategori.</p>
+          </div><button class="btn primary" id="addBudgetBtn">＋ Buat anggaran</button>
+        </div>
+        <div class="stat-grid compact">
+          <article class="stat-card">
+            <div class="stat-label">Total anggaran</div><strong id="budgetTotal">Rp0</strong>
+          </article>
+          <article class="stat-card">
+            <div class="stat-label">Sudah digunakan</div><strong id="budgetUsed">Rp0</strong>
+          </article>
+          <article class="stat-card">
+            <div class="stat-label">Sisa anggaran</div><strong id="budgetRemaining">Rp0</strong>
+          </article>
+        </div>
+        <div class="card-grid" id="budgetCards"></div>
+      </section>
+
+      <section class="page" id="page-goals">
+        <div class="section-toolbar">
+          <div>
+            <h2>Target tabungan</h2>
+            <p>Buat tujuan dan pantau progres menabungmu.</p>
+          </div><button class="btn primary" id="addGoalBtn">＋ Buat target</button>
+        </div>
+        <div class="card-grid" id="goalCards"></div>
+      </section>
+
+      <section class="page" id="page-debts">
+        <div class="section-toolbar">
+          <div>
+            <h2>Utang & piutang</h2>
+            <p>Catat uang yang harus kamu bayar atau terima.</p>
+          </div><button class="btn primary" id="addDebtBtn">＋ Catat baru</button>
+        </div>
+        <div class="stat-grid compact">
+          <article class="stat-card">
+            <div class="stat-label">Utang yang harus dibayar</div><strong id="debtOwed">Rp0</strong>
+          </article>
+          <article class="stat-card">
+            <div class="stat-label">Piutang yang harus diterima</div><strong id="debtReceivable">Rp0</strong>
+          </article>
+        </div>
+        <div class="card-grid" id="debtCards"></div>
+      </section>
+
+      <section class="page" id="page-bills">
+        <div class="section-toolbar">
+          <div>
+            <h2>Pengingat tagihan</h2>
+            <p>Catat tagihan dan tanggal jatuh temponya.</p>
+          </div><button class="btn primary" id="addBillBtn">＋ Tambah tagihan</button>
+        </div>
+        <div class="notice">Notifikasi browser hanya dapat muncul ketika website diizinkan dan browser/perangkat
+          mendukungnya. Untuk pengingat yang tetap berjalan saat website ditutup, diperlukan layanan terjadwal tambahan.
+        </div>
+        <div class="card-grid" id="billCards"></div>
+      </section>
+
+      <section class="page" id="page-reports">
+        <div class="section-toolbar">
+          <div>
+            <h2>Laporan tahunan</h2>
+            <p>Bandingkan pemasukan dan pengeluaran setiap bulan.</p>
+          </div><select id="reportYear"></select>
+        </div>
+        <div class="panel chart-panel">
+          <div class="chart-legend"><span><i class="dot green"></i>Pemasukan</span><span><i
+                class="dot coral"></i>Pengeluaran</span></div>
+          <div id="annualChart" class="annual-chart"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-title">
+            <div>
+              <h2>Rekap bulanan</h2>
+              <p>Ringkasan angka selama satu tahun.</p>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>BULAN</th>
+                  <th class="right">PEMASUKAN</th>
+                  <th class="right">PENGELUARAN</th>
+                  <th class="right">SELISIH</th>
+                </tr>
+              </thead>
+              <tbody id="annualRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop hidden" id="modalBackdrop">
+    <div class="modal">
+      <div class="modal-head">
+        <h2 id="modalTitle">Tambah data</h2><button class="icon-btn" id="modalClose">×</button>
       </div>
-    </section>
+      <form id="modalForm">
+        <div id="modalFields"></div>
+        <div class="modal-actions"><button type="button" class="btn ghost" id="modalCancel">Batal</button><button
+            class="btn primary" id="modalSave">Simpan</button></div>
+      </form>
+    </div>
+  </div>
+  <div id="toast" class="toast"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
 
-    <section class="page" id="page-transactions"><div class="panel"><div class="section-toolbar"><div><h2>Semua transaksi</h2><p>Kelola pemasukan dan pengeluaranmu.</p></div><div class="toolbar-controls"><input id="txSearch" placeholder="Cari transaksi..."><select id="txFilter"><option value="all">Semua jenis</option><option value="income">Pemasukan</option><option value="expense">Pengeluaran</option></select></div></div><div class="table-wrap"><table><thead><tr><th>TRANSAKSI</th><th>KATEGORI</th><th>TANGGAL</th><th>JENIS</th><th class="right">NOMINAL</th><th></th></tr></thead><tbody id="allTxRows"></tbody></table><div class="empty hidden" id="txEmpty">Tidak ada transaksi yang cocok.</div></div></div></section>
-
-    <section class="page" id="page-budgets"><div class="section-toolbar"><div><h2>Anggaran bulanan</h2><p>Tetapkan batas pengeluaran per kategori.</p></div><button class="btn primary" id="addBudgetBtn">＋ Buat anggaran</button></div><div class="stat-grid compact"><article class="stat-card"><div class="stat-label">Total anggaran</div><strong id="budgetTotal">Rp0</strong></article><article class="stat-card"><div class="stat-label">Sudah digunakan</div><strong id="budgetUsed">Rp0</strong></article><article class="stat-card"><div class="stat-label">Sisa anggaran</div><strong id="budgetRemaining">Rp0</strong></article></div><div class="card-grid" id="budgetCards"></div></section>
-
-    <section class="page" id="page-goals"><div class="section-toolbar"><div><h2>Target tabungan</h2><p>Buat tujuan dan pantau progres menabungmu.</p></div><button class="btn primary" id="addGoalBtn">＋ Buat target</button></div><div class="card-grid" id="goalCards"></div></section>
-
-    <section class="page" id="page-debts"><div class="section-toolbar"><div><h2>Utang & piutang</h2><p>Catat uang yang harus kamu bayar atau terima.</p></div><button class="btn primary" id="addDebtBtn">＋ Catat baru</button></div><div class="stat-grid compact"><article class="stat-card"><div class="stat-label">Utang yang harus dibayar</div><strong id="debtOwed">Rp0</strong></article><article class="stat-card"><div class="stat-label">Piutang yang harus diterima</div><strong id="debtReceivable">Rp0</strong></article></div><div class="card-grid" id="debtCards"></div></section>
-
-    <section class="page" id="page-bills"><div class="section-toolbar"><div><h2>Pengingat tagihan</h2><p>Catat tagihan dan tanggal jatuh temponya.</p></div><button class="btn primary" id="addBillBtn">＋ Tambah tagihan</button></div><div class="notice">Notifikasi browser hanya dapat muncul ketika website diizinkan dan browser/perangkat mendukungnya. Untuk pengingat yang tetap berjalan saat website ditutup, diperlukan layanan terjadwal tambahan.</div><div class="card-grid" id="billCards"></div></section>
-
-    <section class="page" id="page-reports"><div class="section-toolbar"><div><h2>Laporan tahunan</h2><p>Bandingkan pemasukan dan pengeluaran setiap bulan.</p></div><select id="reportYear"></select></div><div class="panel chart-panel"><div class="chart-legend"><span><i class="dot green"></i>Pemasukan</span><span><i class="dot coral"></i>Pengeluaran</span></div><div id="annualChart" class="annual-chart"></div></div><div class="panel"><div class="panel-title"><div><h2>Rekap bulanan</h2><p>Ringkasan angka selama satu tahun.</p></div></div><div class="table-wrap"><table><thead><tr><th>BULAN</th><th class="right">PEMASUKAN</th><th class="right">PENGELUARAN</th><th class="right">SELISIH</th></tr></thead><tbody id="annualRows"></tbody></table></div></div></section>
-  </main>
-</div>
-
-<div class="modal-backdrop hidden" id="modalBackdrop"><div class="modal"><div class="modal-head"><h2 id="modalTitle">Tambah data</h2><button class="icon-btn" id="modalClose">×</button></div><form id="modalForm"><div id="modalFields"></div><div class="modal-actions"><button type="button" class="btn ghost" id="modalCancel">Batal</button><button class="btn primary" id="modalSave">Simpan</button></div></form></div></div>
-<div id="toast" class="toast"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script><script src="app.js"></script>
-</body></html>
+</html>
