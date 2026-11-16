@@ -78,6 +78,15 @@
           </div>
           <div class="hero-symbol">↗</div>
         </div>
+        <div class="wallet-section">
+          <div class="wallet-section-head">
+            <div>
+              <h2>Dompet & rekening</h2>
+              <p>Saldo dipisahkan berdasarkan tempat uang disimpan.</p>
+            </div>
+          </div>
+          <div id="walletCards" class="wallet-grid"></div>
+        </div>
         <div class="stat-grid">
           <article class="stat-card">
             <div class="stat-label"><i class="stat-icon up">↗</i> Pemasukan bulan ini</div><strong
@@ -103,6 +112,8 @@
             <form id="quickForm">
               <div class="quick-box"><input id="quickInput" placeholder="Contoh: makan siang 25.000" autocomplete="off"
                   required><button type="submit">↑</button></div>
+              <div class="quick-wallet"><label for="quickWallet">Bayar / terima melalui</label><select
+                  id="quickWallet"></select></div>
               <div class="chips"><button type="button" data-example="Makan siang 25.000">Makan siang
                   25.000</button><button type="button" data-example="+ Gaji 2.500.000">+ Gaji 2.500.000</button><button
                   type="button" data-example="- Bensin 50.000">- Bensin 50.000</button></div><small class="tip">Gunakan
@@ -119,6 +130,7 @@
                   </select></div>
                 <div><label>Nominal (Rp)</label><input id="txAmount" type="number" min="1" required></div>
                 <div><label>Kategori</label><select id="txCategory"></select></div>
+                <div><label>Sumber dana</label><select id="txWallet"></select></div>
                 <div><label>Tanggal</label><input id="txDate" type="date" required></div>
               </div><button class="btn primary full">Simpan transaksi</button>
             </form>
@@ -178,6 +190,7 @@
                 <tr>
                   <th>TRANSAKSI</th>
                   <th>KATEGORI</th>
+                  <th>SUMBER DANA</th>
                   <th>TANGGAL</th>
                   <th>JENIS</th>
                   <th class="right">NOMINAL</th>
